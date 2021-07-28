@@ -4,6 +4,9 @@ import {
   LightningBoltIcon,
   ScaleIcon,
 } from "@heroicons/react/outline"
+import { useContext, useEffect } from "react"
+import { NoAuthentication } from "../Authentication/NoAuthentication"
+import { TokenContext } from "../context/contextToken"
 
 const features = [
   {
@@ -33,6 +36,9 @@ const features = [
 ]
 
 const profile = () => {
+  NoAuthentication()
+  const { token } = useContext(TokenContext)
+  useEffect(() => {}, [token])
   return (
     <div className="py-12 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

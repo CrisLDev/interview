@@ -1,7 +1,10 @@
-import { Fragment } from "react"
+import { Fragment, useContext } from "react"
 import { Disclosure, Menu, Transition } from "@headlessui/react"
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline"
 import Link from "next/link"
+import { TokenContext } from "../../../context/contextToken"
+import Cookies from "js-cookie"
+import { useRouter } from "next/router"
 
 const navigation = [
   { name: "Dashboard", href: "dashboard", current: true },
@@ -16,6 +19,13 @@ function classNames(...classes: any) {
 }
 
 const Navbar = () => {
+  const { token, setToken } = useContext(TokenContext)
+  const router = useRouter()
+  const closeSesion = () => {
+    Cookies.remove("Authorization")
+    router.push("/login")
+    setToken("")
+  }
   return (
     <header>
       <Disclosure as="nav" className="bg-gray-800">
@@ -53,7 +63,6 @@ const Navbar = () => {
                         <Link key={item.name} href={item.href}>
                           <a
                             key={item.name}
-                            href={item.href}
                             className={classNames(
                               item.current
                                 ? "bg-gray-900 text-white"
@@ -103,45 +112,81 @@ const Navbar = () => {
                             static
                             className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
                           >
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                            {token ? (
+                              <>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Your Profile
+                                    </a>
                                   )}
-                                >
-                                  Your Profile
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      href="#"
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Settings
+                                    </a>
                                   )}
-                                >
-                                  Settings
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active ? "bg-gray-100" : "",
-                                    "block px-4 py-2 text-sm text-gray-700"
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <a
+                                      onClick={closeSesion}
+                                      className={classNames(
+                                        active ? "bg-gray-100" : "",
+                                        "block px-4 py-2 text-sm text-gray-700"
+                                      )}
+                                    >
+                                      Sign out
+                                    </a>
                                   )}
-                                >
-                                  Sign out
-                                </a>
-                              )}
-                            </Menu.Item>
+                                </Menu.Item>
+                              </>
+                            ) : (
+                              <>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <Link href="/login">
+                                      <a
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        LogIn
+                                      </a>
+                                    </Link>
+                                  )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <Link href="/register">
+                                      <a
+                                        href="#"
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        Register
+                                      </a>
+                                    </Link>
+                                  )}
+                                </Menu.Item>
+                              </>
+                            )}
                           </Menu.Items>
                         </Transition>
                       </>

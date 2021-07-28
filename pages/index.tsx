@@ -1,13 +1,12 @@
 import { QueryClient, QueryClientProvider, useQuery } from "react-query"
 import styles from "../styles/Index.module.css"
-import { ReactQueryDevtools } from "react-query/devtools"
 
 const fetchAllPeopleFromAPI = async () => {
   const res = await fetch("https://swapi.dev/api/people/")
   return res.json()
 }
 
-function HTML() {
+const index = () => {
   const { isLoading, error, data } = useQuery("nothing", fetchAllPeopleFromAPI)
   console.log("data", data)
   console.log("isLoading", isLoading)
@@ -25,13 +24,4 @@ function HTML() {
   )
 }
 
-const queryClient = new QueryClient()
-
-export default function Home() {
-  return (
-    <QueryClientProvider client={queryClient} contextSharing={true}>
-      <HTML />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
-  )
-}
+export default index
