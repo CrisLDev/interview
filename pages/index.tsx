@@ -13,7 +13,7 @@ const index = () => {
   return (
     <>
       {isLoading === false &&
-        data.results.map((item: any) => (
+        data.items.results.map((item: any) => (
           <div>
             <strong>{item.name}</strong>
             <p>{item.gender}</p>

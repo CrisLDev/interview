@@ -1,6 +1,5 @@
 import axios from "axios"
 import Cookies from "js-cookie"
-import { TokenContext } from "../context/contextToken"
 
 const API_URI = process.env.API_URI || "http://localhost:4123/api/"
 

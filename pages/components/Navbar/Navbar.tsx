@@ -8,7 +8,6 @@ import { useRouter } from "next/router"
 
 const navigation = [
   { name: "Dashboard", href: "dashboard", current: true },
-  { name: "Profile", href: "profile", current: false },
   { name: "Store", href: "store", current: false },
   { name: "Projects", href: "#", current: false },
   { name: "Calendar", href: "#", current: false },
@@ -46,16 +45,20 @@ const Navbar = () => {
                 </div>
                 <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                   <div className="flex-shrink-0 flex items-center">
-                    <img
-                      className="block lg:hidden h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
-                      alt="Workflow"
-                    />
-                    <img
-                      className="hidden lg:block h-8 w-auto"
-                      src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                      alt="Workflow"
-                    />
+                    <Link href="/">
+                      <img
+                        className="block lg:hidden h-8 w-auto"
+                        src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                        alt="Workflow"
+                      />
+                    </Link>
+                    <Link href="/">
+                      <img
+                        className="hidden lg:block h-8 w-auto"
+                        src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                        alt="Workflow"
+                      />
+                    </Link>
                   </div>
                   <div className="hidden sm:block sm:ml-6">
                     <div className="flex space-x-4">
@@ -85,7 +88,7 @@ const Navbar = () => {
                   </button>
 
                   {/* Profile dropdown */}
-                  <Menu as="div" className="ml-3 relative">
+                  <Menu as="div" className="ml-3 relative z-10">
                     {({ open }) => (
                       <>
                         <div>
@@ -116,15 +119,30 @@ const Navbar = () => {
                               <>
                                 <Menu.Item>
                                   {({ active }) => (
-                                    <a
-                                      href="#"
-                                      className={classNames(
-                                        active ? "bg-gray-100" : "",
-                                        "block px-4 py-2 text-sm text-gray-700"
-                                      )}
-                                    >
-                                      Your Profile
-                                    </a>
+                                    <Link href="/profile">
+                                      <a
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        Your Profile
+                                      </a>
+                                    </Link>
+                                  )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                  {({ active }) => (
+                                    <Link href="/myitems">
+                                      <a
+                                        className={classNames(
+                                          active ? "bg-gray-100" : "",
+                                          "block px-4 py-2 text-sm text-gray-700"
+                                        )}
+                                      >
+                                        My items
+                                      </a>
+                                    </Link>
                                   )}
                                 </Menu.Item>
                                 <Menu.Item>
