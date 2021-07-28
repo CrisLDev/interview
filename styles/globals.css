@@ -18,3 +18,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.textTruncate {
+  display: block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
