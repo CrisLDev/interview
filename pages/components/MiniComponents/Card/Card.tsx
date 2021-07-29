@@ -2,6 +2,8 @@ import { FC } from "react"
 import styles from "./Card.module.css"
 import { PencilIcon, TrashIcon } from "@heroicons/react/outline"
 import Link from "next/link"
+import { useMutation, useQueryClient } from "react-query"
+import { deleteItemById } from "../../../../services/item.service"
 
 interface ICard {
   item: any
@@ -10,6 +12,15 @@ interface ICard {
 
 const Card: FC<ICard> = (props) => {
   const { item, own } = props
+  // Access the client
+  const queryClient = useQueryClient()
+  // Mutations
+  const mutation = useMutation(deleteItemById, {
+    onSuccess: (data) => {
+      queryClient.setQueryData("itemDeleted", data.data)
+      queryClient.invalidateQueries("allMyItems")
+    },
+  })
   return (
     <div className={styles.card}>
       <div className={`${styles.cardHeader} textTruncate`}>{item.name}</div>
@@ -29,11 +40,12 @@ const Card: FC<ICard> = (props) => {
                 <PencilIcon className="h-6 w-6" aria-hidden="true" />
               </button>
             </Link>
-            <Link href={`myitems/edit/${item._id}`}>
-              <button className={styles.cardButton}>
-                <TrashIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </Link>
+            <button
+              className={styles.cardButton}
+              onClick={() => mutation.mutate(item._id)}
+            >
+              <TrashIcon className="h-6 w-6" aria-hidden="true" />
+            </button>
           </>
         ) : (
           <>

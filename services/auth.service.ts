@@ -11,6 +11,10 @@ export const getUser = async (userData: any) => {
   return axios.post(`${API_URI}auth`, userData)
 }
 
+export const getMe = async () => {
+  return axios.get(`${API_URI}auth`)
+}
+
 export const setTokenInCookie = async (token: string) => {
   const threeHours = new Date(new Date().getTime() + 180 * 60 * 1000)
   Cookies.set("Authorization", token, {

@@ -4,7 +4,7 @@ type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 interface ChildProps {
   handleClickSubmit: (item: any, image: any) => void
-  initialState: any
+  initialState?: any
 }
 
 const itemform: FC<ChildProps> = (props) => {

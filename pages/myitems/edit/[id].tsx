@@ -16,8 +16,8 @@ const itemId = ({ params }: any, props: any) => {
   // Mutations
   const mutation = useMutation(updateItemById, {
     onSuccess: (data) => {
-      const token: string = data.data.token
-      queryClient.setQueryData("userLoged", [token])
+      queryClient.setQueryData("itemUpdated", data.data)
+      queryClient.invalidateQueries("allMyItems")
     },
   })
   const router = useRouter()
@@ -27,7 +27,9 @@ const itemId = ({ params }: any, props: any) => {
       formData.append("name", item.name)
       formData.append("description", item.description)
       formData.append("stock", item.stock)
-      formData.append("image", image[0])
+      if (image != undefined) {
+        formData.append("image", image[0])
+      }
       mutation.mutate({ id, formData })
       router.push("/myitems")
     }

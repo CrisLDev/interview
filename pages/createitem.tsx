@@ -1,12 +1,15 @@
 import { useRouter } from "next/router"
-import React, { ChangeEvent, FormEvent, useState } from "react"
+import React, { ChangeEvent, FormEvent, useContext, useState } from "react"
 import { useMutation, useQueryClient } from "react-query"
+import setAuthToken from "../authToken"
+import { TokenContext } from "../context/contextToken"
 import { createItem } from "../services/item.service"
 import ItemForm from "./components/ItemForm/itemform"
 
 type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 
 const createitem = () => {
+  const { token } = useContext(TokenContext)
   // Access the client
   const queryClient = useQueryClient()
   // Mutations
@@ -17,6 +20,7 @@ const createitem = () => {
     },
   })
   const router = useRouter()
+  setAuthToken();
   const handleSend = (item: any, image: any) => {
     let formData = new FormData()
     formData.append("name", item.name)
